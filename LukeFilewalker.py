@@ -5,12 +5,19 @@ from configparser import ConfigParser
 import json #invite jason
 from tinytag import TinyTag
 from PIL import Image
+import sys
 
-rootdir = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Beat Saber\\Beat Saber_Data\\CustomLevels"#'C:\\Users\\kooba\\OneDrive\\Dokumente\\dataDumper'
+rootdir = "C:\\Users\\kooba\\Downloads\\Beatmaps"#'C:\\Users\\kooba\\OneDrive\\Dokumente\\dataDumper'
 config = ConfigParser()
+
+if(len(sys.argv) >= 2):
+    rootdir = sys.argv[1]
+    print("Startup argument found. Using rootdir "+sys.argv[1])
+
 totalConverted = 0
 
 ERASE_COVERS = 0
+
 #func 
 
 def calcAddTime(_time,_lob):
@@ -77,9 +84,6 @@ def loadInfoDat(file):
         return data
 
 
-
-
-# main
 
 for baseFolder, dirs, files in os.walk(rootdir):
     #Define song variables
@@ -197,7 +201,7 @@ for baseFolder, dirs, files in os.walk(rootdir):
         for note in notesArray:
             type = note["_lineIndex"]
             time = note["_time"]
-                   
+                
             if type == 0:
                 #far left:
                 addTime = calcAddTime(time,lengthOfBeat)
@@ -255,5 +259,6 @@ for baseFolder, dirs, files in os.walk(rootdir):
     except:
         print("Couldnt write file...")
 
-   
+ 
+ 
 print("Total maps converted: "+str(totalConverted))
